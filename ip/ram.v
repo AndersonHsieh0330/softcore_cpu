@@ -8,7 +8,7 @@ module ram #(
 	input clk,
 	input [7:0] addr_in,
 	input [7:0] data_in,
-	input ram_en, // HIGH when any operation for ram is happening
+	input en, // HIGH when any operation for ram is happening
 	input r_w, // 0 for read, 1 for write
 	output [7:0] data_out
 );
@@ -19,7 +19,7 @@ reg ram_g_clk;
 
 clk_gate clk_gate_inst (
 	.clk(clk),
-	.en(ram_en),
+	.en(en),
 	.g_clk(ram_g_clk)
 );
 
