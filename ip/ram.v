@@ -1,16 +1,22 @@
 /*
-*	Single port memory
+*	Double port memory
 */
 module ram #(
 	parameter WORD_LINE = 256, // address are 8 bits
 	parameter BIT_LINE = 8 // byte addressable
 ) (
 	input clk,
-	input [7:0] addr_in,
-	input [7:0] data_in,
 	input en, // HIGH when any operation for ram is happening
-	input r_w, // 0 for read, 1 for write
-	output [7:0] data_out
+	
+	input [7:0] addr_in_port_1,
+	input [7:0] data_in_port_1,
+	input r_w_port_1, // 0 for read, 1 for write
+	output [7:0] data_out_port_1,
+	
+	input [7:0] addr_in_port_2,
+	input [7:0] data_in_port_2,
+	input r_w_port_2, // 0 for read, 1 for write
+	output [7:0] data_out_port_2,
 );
 
 // TODO : look into how to add flags so vivado compiler infers block ram
