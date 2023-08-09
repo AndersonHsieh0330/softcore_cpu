@@ -30,10 +30,15 @@ clk_gate clk_gate_inst (
 );
 
 always @(posedge ram_g_clk) begin 
-	if (write_en) begin
-		memory[addr_in] <= data_in;
+	if (r_w_port_1) begin
+		memory[addr_in_port_1] <= data_in_port_1;
 	end else begin
-		data_out <= memory[addr_in];
+		data_out_port_1 <= memory[addr_in_port_1]
+
+	if (r_w_port_2) begin
+		memory[addr_in_port_2] <= data_in_port_2;
+	end else begin
+		data_out_port_2 <= memory[addr_in_port_2]
 	end
 end
 

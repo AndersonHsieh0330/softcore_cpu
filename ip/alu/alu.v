@@ -1,0 +1,63 @@
+`include "../param.vh"
+
+module alu 
+#(
+	parameter BIT_COUNT = 8
+)
+(
+	input [BIT_COUNT-1:0] a, // reg_acc
+	input [BIT_COUNT-1:0] b, // cpu bus
+	input [`ISA_INSTRUCTION_COUNT-1:0] instruction_en,
+	output [BIT_COUNT-1:0] c,
+	output [ALU_FLAG_COUNT-1:0] flags, 
+);
+wire [3:0] imm;
+assign imm = b[3:0];
+
+//--- add, addi
+wire [BIT_COUNT-1:0] adder_input;
+wire [BIT_COUNT-1:0] adder_output;
+// select input signal with enable so we only have to instantiate one adder instance
+assign adder_input = (instruction_en[`ISA_ADD] & a) | {4'b0, ({4{instruction_en[`ISA_ADDI]}} & imm)}; 
+adder adder_inst(
+	.a(a),
+	.b(adder_output), 
+	.sum(adder_result),
+	.cout(1'bz) // temporary
+);
+
+//--- sh, shi
+wire [BIT_COUNT-1:0] shift_amount;
+wire [BIT_COUNT-1:0] shifter_output;
+assign shift_amount = (instruction_en[`ISA_SH] & a) | {4'b0, ({4{instruction_en[`ISA_SHI]}} & imm)};
+shifter shifter_inst (
+	.shift_in(a),
+	.shift_amount(shift_amount),
+	.shift_out(shifter_output)
+);
+
+//--- not
+wire [BIT_COUNT-1:0] isa_not_result;
+assign isa_not_result = ~a;
+
+//--- and
+wire [BIT_COUNT-1:0] isa_and_result;
+assign isa_and_result = a & b;
+
+//--- or
+wire [BIT_COUNT-1:0] isa_or_result;
+assign isa_or_result = a | b;
+
+//--- xor, branch flags
+wire [BIT_COUNT-1:0] isa_xor_result;
+xor_comparator comparator_inst (
+	.a(a),
+	.b(b),
+	.xor_result(isa_xor_result),
+	.equal(flags[`ALU_FLAG_EQ]),
+	.a_larger(~flags[`ALU_FLAG_GT]) // note that a is reg_acc, so inversed
+);
+
+//--- output enable based on instruction enable
+endmodule
+
