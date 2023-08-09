@@ -59,5 +59,13 @@ xor_comparator comparator_inst (
 );
 
 //--- output enable based on instruction enable
+assign c = 
+	(adder_output & {8{instruction_en[`ISA_ADD] | instruction_en[`ISA_ADDI]}}) |
+	(shifter_output & {8{instruction_en[`ISA_SH] | instruction_en[`ISA_SHI]}}) |
+	(isa_not_result & {8{instruction_en[`ISA_NOT]}})						   |
+	(isa_and_result & {8{instruction_en[`ISA_AND]}})						   |
+	(isa_or_result & {8{intrusction_en[`ISA_OR]}})							   |
+	(isa_or_result & {8{instruction_en[`ISA_XOR]}});
+
 endmodule
 
