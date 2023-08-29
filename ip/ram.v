@@ -8,19 +8,19 @@ module ram #(
 	input clk,
 	input en, // HIGH when any operation for ram is happening
 	
-	input [7:0] addr_in_port_1,
-	input [7:0] data_in_port_1,
+	input [BIT_LINE-1:0] addr_in_port_1,
+	input [BIT_LINE-1:0] data_in_port_1,
 	input r_w_port_1, // 0 for read, 1 for write
-	output [7:0] data_out_port_1,
+	output [BIT_LINE-1:0] data_out_port_1,
 	
-	input [7:0] addr_in_port_2,
-	input [7:0] data_in_port_2,
+	input [BIT_LINE-1::0] addr_in_port_2,
+	input [BIT_LINE-1:0] data_in_port_2,
 	input r_w_port_2, // 0 for read, 1 for write
-	output [7:0] data_out_port_2,
+	output [BIT_LINE-1:0] data_out_port_2,
 );
 
 // TODO : look into how to add flags so vivado compiler infers block ram
-reg [256][8] memory;
+(* ram_style = "block" *) reg [BIT_LINE-1:0] memory {WORD_LINE-1:0};
 reg ram_g_clk;
 
 clk_gate clk_gate_inst (
