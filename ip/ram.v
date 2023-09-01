@@ -11,12 +11,12 @@ module ram #(
 	input [BIT_LINE-1:0] addr_in_port_1,
 	input [BIT_LINE-1:0] data_in_port_1,
 	input r_w_port_1, // 0 for read, 1 for write
-	output [BIT_LINE-1:0] data_out_port_1,
+	output reg [BIT_LINE-1:0] data_out_port_1,
 	
 	input [BIT_LINE-1::0] addr_in_port_2,
 	input [BIT_LINE-1:0] data_in_port_2,
 	input r_w_port_2, // 0 for read, 1 for write
-	output [BIT_LINE-1:0] data_out_port_2,
+	output reg [BIT_LINE-1:0] data_out_port_2,
 );
 
 // TODO : look into how to add flags so vivado compiler infers block ram
