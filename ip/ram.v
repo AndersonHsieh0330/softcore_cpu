@@ -19,9 +19,12 @@ module ram #(
 	output reg [BIT_LINE-1:0] data_out_port_2,
 );
 
-// TODO : look into how to add flags so vivado compiler infers block ram
-(* ram_style = "block" *) reg [BIT_LINE-1:0] memory {WORD_LINE-1:0};
 reg ram_g_clk;
+(* ram_style = "block" *) reg [BIT_LINE-1:0] memory {WORD_LINE-1:0};
+
+initial begin
+$readmemb("ram_8_256.data", memory, 0, 256);
+end
 
 clk_gate clk_gate_inst (
 	.clk(clk),
