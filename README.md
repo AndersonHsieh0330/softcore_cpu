@@ -15,6 +15,7 @@ Generally there are three types of CPUs
 3. General registers
 
 Most CPUs nowadays uses general registers based organization, but due to the instructions of my design being 8 bits, I'd like to use least number of bits to address the operand register. That way as many bits can be used as opcode as possible to specify the instructions, this also enables me to have enough bits to address all the instructions I want to implement while having extra space for future ISA expansion.
+
 The accumulator based organization uses the accumulator register as an operand to every instruction, which means in each instruction we only need to specify one operand register. For example, in RSIC-V ISA, the "ADD" instruction takes 3 operands registers: "add reg_a, reg_b, reg_c". This assembly instruction adds the values in reg_b and reg_c and store the result in reg_a. In my design with the accumulator based cpu organization, I can simply do "add reg_a" and that implies adding value in reg_a to the accumulator register and store the result in the accumulator register.
 
 ## Random Access Memory (RAM)
