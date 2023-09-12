@@ -9,10 +9,10 @@ I drew this picture while I was designing the CPU. A lot of signals are ignored 
 Check [ISA excel sheet](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/isa.xlsx) for full ISA specification. 
 
 Below is a screenshot of all the instructions for quick access
-![instruction_screenshot](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/instruction_screenshot.png)
+![instruction_screenshot](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/instructions_screenshot.png)
 
 And there are some assembly code blocks that I wrote to ensure this ISA is capable of implementing most general purpose programs
-![example_instruction_block](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/example_instruction_block.png)
+![example_instruction_block](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/example_instruction_blocks.png?raw=true)
 
 ## Types of CPU organization and thoughts behind design choices
 Generally there are three types of CPUs
