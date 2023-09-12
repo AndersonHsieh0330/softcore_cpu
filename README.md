@@ -3,7 +3,7 @@ This is a 8 bit "accumulator based" CPU, with a full set of ISA that implements 
 
 ## Design Schematic
 I drew this picture while I was designing the CPU. A lot of signals are ignored in the diagram but generally the Verilog code implements the IP block structure presented in it.
-![schematic diagram](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/schematic_diagram.pdf)
+![schematic diagram](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/schematic_diagram.png)
 
 ## Instruction Set Architecture
 Check [ISA excel sheet](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/isa.xlsx) for full ISA specification. 
