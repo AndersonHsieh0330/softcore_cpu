@@ -1,12 +1,5 @@
 ## Overview
-This is a 8 bit "accumulator based" CPU, with a full set of ISA that implements basic arithmetic/logical operations, read and store into memory, and jump/branch instructions.  
-
-## Pipline stages and clock frequency
-This CPU also implements 2 stage pipline of fetch and decode + execute. The thought process behind this is that the decoding logic is fairly simple, require at most 4 layers of AND gates and one inverter, so I decided to combine decode and execute stage into one pipeline and estimate the clock frequency to be about 90 MHz from past experience in implementing systolic array multiplication in university course. 
-
-2 stage pipline also simplifies the implementation of jump, store and load instructions due to the one cycle delay of sychronous RAM, since I can use a single signal to notify the fetch stage that I am currently running a 2 cycle instruction.
-![instruction_decoding](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/instruction_decoding.png?raw=true)
-
+This is a 8 bit "accumulator based" CPU, with 2 stage pipline stage and a full set of ISA that implements basic arithmetic/logical operations, read and store into memory, and jump/branch instructions.  
 
 ## Design Schematic
 I drew this picture while I was designing the CPU. A lot of signals are ignored in the diagram but generally the Verilog code implements the IP block structure presented in it.
@@ -31,6 +24,12 @@ Generally there are three types of CPUs
 Most CPUs nowadays uses general registers based organization, but due to the instructions of my design being 8 bits, I'd like to use least number of bits to address the operand register. That way as many bits can be used as opcode as possible to specify the instructions, this also enables me to have enough bits to address all the instructions I want to implement while having extra space for future ISA expansion.
 
 The accumulator based organization uses the accumulator register as an operand to every instruction, which means in each instruction we only need to specify one operand register. For example, in RSIC-V ISA, the "ADD" instruction takes 3 operands registers: "add reg_a, reg_b, reg_c". This assembly instruction adds the values in reg_b and reg_c and store the result in reg_a. In my design with the accumulator based cpu organization, I can simply do "add reg_a" and that implies adding value in reg_a to the accumulator register and store the result in the accumulator register.
+
+## Pipline stages and clock frequency
+This CPU also implements 2 stage pipline of fetch and decode + execute. The thought process behind this is that the decoding logic is fairly simple, require at most 4 layers of AND gates and one inverter, so I decided to combine decode and execute stage into one pipeline and estimate the clock frequency to be about 90 MHz from past experience in implementing systolic array multiplication in university course. 
+
+2 stage pipline also simplifies the implementation of jump, store and load instructions due to the one cycle delay of sychronous RAM, since I can use a single signal to notify the fetch stage that I am currently running a 2 cycle instruction.
+![instruction_decoding](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/instruction_decoding.png?raw=true)
 
 ## Random Access Memory (RAM)
 - Dual port, 256 X 8 bits byte addressible.
