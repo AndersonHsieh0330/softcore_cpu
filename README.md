@@ -1,15 +1,23 @@
 ## Overview
 This is a 8 bit "accumulator based" CPU, with a full set of ISA that implements basic arithmetic/logical operations, read and store into memory, and jump/branch instructions.  
 
+## Pipline stages and clock frequency
+This CPU also implements 2 stage pipline of fetch and decode + execute. The thought process behind this is that the decoding logic is fairly simple, require at most 4 layers of AND gates and one inverter, so I decided to combine decode and execute stage into one pipeline and estimate the clock frequency to be about 90 MHz from past experience in implementing systolic array multiplication in university course. 
+
+2 stage pipline also simplifies the implementation of jump, store and load instructions due to the one cycle delay of sychronous RAM, since I can use a single signal to notify the fetch stage that I am currently running a 2 cycle instruction.
+![instruction_decoding](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/instruction_decoding.png?raw=true)
+
+
 ## Design Schematic
 I drew this picture while I was designing the CPU. A lot of signals are ignored in the diagram but generally the Verilog code implements the IP block structure presented in it.
-![schematic diagram](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/schematic_diagram.png)
+A single CPU bus is shared and connected to all the available registers, RAM and ALU.
+![schematic diagram](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/schematic_diagram.png?raw=true)
 
 ## Instruction Set Architecture
 Check [ISA excel sheet](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/isa.xlsx) for full ISA specification. 
 
 Below is a screenshot of all the instructions for quick access
-![instruction_screenshot](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/instructions_screenshot.png)
+![instruction_screenshot](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/instructions_screenshot.png?raw=true)
 
 And there are some assembly code blocks that I wrote to ensure this ISA is capable of implementing most general purpose programs
 ![example_instruction_block](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/example_instruction_blocks.png?raw=true)
