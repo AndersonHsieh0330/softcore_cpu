@@ -3,10 +3,16 @@ This is a 8 bit "accumulator based" CPU, with a full set of ISA that implements 
 
 ## Design Schematic
 I drew this picture while I was designing the CPU. A lot of signals are ignored in the diagram but generally the Verilog code implements the IP block structure presented in it.
-![ISA excel sheet](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/schematic_diagram.png)
+![schematic diagram](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/schematic_diagram.pdf)
 
 ## Instruction Set Architecture
 Check [ISA excel sheet](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/isa.xlsx) for full ISA specification. 
+
+Below is a screenshot of all the instructions for quick access
+![instruction_screenshot](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/instruction_screenshot.png)
+
+And there are some assembly code blocks that I wrote to ensure this ISA is capable of implementing most general purpose programs
+![example_instruction_block](https://github.com/AndersonHsieh0330/softcore_cpu/blob/master/info/example_instruction_block.png)
 
 ## Types of CPU organization and thoughts behind design choices
 Generally there are three types of CPUs
