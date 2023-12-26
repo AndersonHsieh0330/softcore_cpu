@@ -7,8 +7,8 @@
 	BIT_COUNT = 8
 )
 (
-	input [BIT_COUNT-1:0] a,
-	input [BIT_COUNT-1:0] b,
+	input  [BIT_COUNT-1:0] a,
+	input  [BIT_COUNT-1:0] b,
 	output [BIT_COUNT-1:0] sum,
 	output cout
 );
@@ -24,9 +24,9 @@ endmodule
 //--- this is just a gate level full adder for fun
 module full_adder_1_bit 
 (
-	input a,
-	input b,
-	input cin,
+	input  a,
+	input  b,
+	input  cin,
 	output sum,
 	output cout
 );

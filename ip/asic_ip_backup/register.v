@@ -1,3 +1,4 @@
+// these modules are only used for ASIC version of this core
 module register
 #(
 	parameter BIT_COUNT = 8

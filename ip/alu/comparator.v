@@ -1,9 +1,9 @@
 module xor_comparator_1_bit
 (
-	input a,
-	input b,
-	input last_equal, // from higher bit 
-	input last_a_larger, // from higher bit 
+	input  a,
+	input  b,
+	input  last_equal, // from higher bit 
+	input  last_a_larger, // from higher bit 
 	output equal,
 	output a_larger,
 	output xor_result

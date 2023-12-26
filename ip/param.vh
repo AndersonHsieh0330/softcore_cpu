@@ -17,7 +17,7 @@
 `define ISA_BGT    15
 `define ISA_BEQ    16
 `define ISA_BNEQ   17
-`define ISA_INSTRUCTION_COUNT 18
+`define ISA_INSN_COUNT 18
 
 //--- ALU flags
 `define ALU_FLAG_EQ    0 // reg_acc == reg_a

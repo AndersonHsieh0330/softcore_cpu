@@ -4,8 +4,8 @@ module shifter
 	parameter BIT_COUNT = 8
 )
 (
-	input [BIT_COUNT-1:0] shift_in,
-	input [BIT_COUNT-1:0] shift_amount, // 2s complement
+	input  [BIT_COUNT-1:0] shift_in,
+	input  [BIT_COUNT-1:0] shift_amount, // 2s complement
 	output [BIT_COUNT-1:0] shift_out,
 );
 

@@ -5,9 +5,9 @@ module alu
 	parameter BIT_COUNT = 8
 )
 (
-	input [BIT_COUNT-1:0] a, // reg_acc
-	input [BIT_COUNT-1:0] b, // cpu bus
-	input [`ISA_INSTRUCTION_COUNT-1:0] instruction_en,
+	input  [BIT_COUNT-1:0] a, // reg_acc
+	input  [BIT_COUNT-1:0] b, // cpu bus
+	input  [`ISA_INSN_COUNT-1:0] insn_en,
 	output [BIT_COUNT-1:0] c,
 	output [ALU_FLAG_COUNT-1:0] flags, 
 );
@@ -18,7 +18,7 @@ assign imm = b[3:0];
 wire [BIT_COUNT-1:0] adder_input;
 wire [BIT_COUNT-1:0] adder_output;
 // select input signal with enable so we only have to instantiate one adder instance
-assign adder_input = (instruction_en[`ISA_ADD] & a) | {4'b0, ({4{instruction_en[`ISA_ADDI]}} & imm)}; 
+assign adder_input = (insn_en[`ISA_ADD] & a) | {4'b0, ({4{insn_en[`ISA_ADDI]}} & imm)}; 
 adder adder_inst(
 	.a(a),
 	.b(adder_output), 
@@ -29,7 +29,7 @@ adder adder_inst(
 //--- sh, shi
 wire [BIT_COUNT-1:0] shift_amount;
 wire [BIT_COUNT-1:0] shifter_output;
-assign shift_amount = (instruction_en[`ISA_SH] & a) | {4'b0, ({4{instruction_en[`ISA_SHI]}} & imm)};
+assign shift_amount = (insn_en[`ISA_SH] & a) | {4'b0, ({4{insn_en[`ISA_SHI]}} & imm)};
 shifter shifter_inst (
 	.shift_in(a),
 	.shift_amount(shift_amount),
@@ -58,14 +58,14 @@ xor_comparator comparator_inst (
 	.a_larger(~flags[`ALU_FLAG_GT]) // note that a is reg_acc, so inversed
 );
 
-//--- output enable based on instruction enable
+//--- output enable based on insn enable
 assign c = 
-	(adder_output & {8{instruction_en[`ISA_ADD] | instruction_en[`ISA_ADDI]}}) |
-	(shifter_output & {8{instruction_en[`ISA_SH] | instruction_en[`ISA_SHI]}}) |
-	(isa_not_result & {8{instruction_en[`ISA_NOT]}})						   |
-	(isa_and_result & {8{instruction_en[`ISA_AND]}})						   |
+	(adder_output & {8{insn_en[`ISA_ADD] | insn_en[`ISA_ADDI]}}) |
+	(shifter_output & {8{insn_en[`ISA_SH] | insn_en[`ISA_SHI]}}) |
+	(isa_not_result & {8{insn_en[`ISA_NOT]}})						   |
+	(isa_and_result & {8{insn_en[`ISA_AND]}})						   |
 	(isa_or_result & {8{intrusction_en[`ISA_OR]}})							   |
-	(isa_or_result & {8{instruction_en[`ISA_XOR]}});
+	(isa_or_result & {8{insn_en[`ISA_XOR]}});
 
 endmodule
 
