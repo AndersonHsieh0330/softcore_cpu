@@ -5,11 +5,13 @@ module alu
 	parameter BIT_COUNT = 8
 )
 (
-	input  [BIT_COUNT-1:0] a, // reg_acc or PC
-	input  [BIT_COUNT-1:0] b, // reg x0 ~ x6 or immediate value
+	input  [BIT_COUNT-1:0] 		 a, // reg_acc or PC
+	input  [BIT_COUNT-1:0] 		 reg_acc,
+	input  [BIT_COUNT-1:0] 		 b, // reg x0 ~ x6 or immediate value
+	input  [BIT_COUNT-1:0] 		 reg_b,
 	input  [`ALU_MODE_COUNT-1:0] alu_mode,
-	output [BIT_COUNT-1:0] c,
-	output [`ALU_FLAG_COUNT-1:0] flags, 
+	output [BIT_COUNT-1:0] 		 c,
+	output [`ALU_FLAG_COUNT-1:0] alu_flags, 
 );
 wire [3:0] imm;
 assign imm = b[3:0];
@@ -21,8 +23,8 @@ wire [BIT_COUNT-1:0] adder_output;
 assign adder_input = (insn_en[`ISA_ADD] & a) | {4'b0, ({4{insn_en[`ISA_ADDI]}} & imm)}; 
 adder adder_inst(
 	.a(a),
-	.b(adder_output), 
-	.sum(adder_result),
+	.b(b), 
+	.sum(adder_output),
 	.cout(1'bz) // temporary
 );
 
@@ -51,8 +53,8 @@ assign isa_or_result = a | b;
 //--- xor, branch flags
 wire [BIT_COUNT-1:0] isa_xor_result;
 xor_comparator comparator_inst (
-	.a(a),
-	.b(b),
+	.a(reg_acc), // hard code accumulator to input a for ISA optimization
+	.b(reg_b), // hard code reg_b to input b for ISA optimization
 	.xor_result(isa_xor_result),
 	.equal(flags[`ALU_FLAG_EQ]),
 	.a_larger(~flags[`ALU_FLAG_GT]) // note that a is reg_acc, so inversed
@@ -66,7 +68,8 @@ assign c =
 	(isa_and_result & {8{alu_mode[`ALU_MODE_AND]}})	  |
 	(isa_or_result & {8{alu_mode[`ALU_MODE_OR]}})	  |							   |
 	(isa_xor_result & {8{alu_mode[`ALU_MODE_XOR]}})	  |
-	(a & {8{alu_mode[`ALU_MODE_BYPASS]}});
+	(a & {8{alu_mode[`ALU_MODE_BYPASS_A]}})			  |
+	(b & {8{alu_mode[`ALU_MODE_BYPASS_B]}});
 
 endmodule
 

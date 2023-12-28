@@ -25,11 +25,12 @@
 `define ALU_FLAG_COUNT     2
 
 //--- ALU mode ---//
-`define ALU_MODE_ADD       0
-`define ALU_MODE_SHIFT     1
-`define ALU_MODE_NOT       2
-`define ALU_MODE_AND       3
-`define ALU_MODE_OR        4
-`define ALU_MODE_XOR       5       
-`define ALU_MODE_BYPASS    6       
-`define ALU_MODE_COUNT     7       
+`define ALU_MODE_ADD         0
+`define ALU_MODE_SHIFT       1
+`define ALU_MODE_NOT         2
+`define ALU_MODE_AND         3
+`define ALU_MODE_OR          4
+`define ALU_MODE_XOR         5       
+`define ALU_MODE_BYPASS_A    6       
+`define ALU_MODE_BYPASS_B    7       
+`define ALU_MODE_COUNT       8       
