@@ -3,13 +3,12 @@ module control (
     input  wire [4:0] opcode,
     output wire [2:0] alu_mode,
     output wire       rf_write_en, // register file write enable
+    output wire       rf_write_sel, // register file write source select
     output wire       alu_a_sel,   // LOW for accumulator, HIGH for PC 
     output wire       alu_b_sel,   // LOW for reg x0 ~ x6, HIGH for immediate value
-    output wire       mem_write_sel,
     output wire       mem_write_en
 );
 
-// alu_mode
 always @(*) begin
     case(opcode[4:1]) 
         4'b000? : alu_mode = `ALU_MODE_ADD;
@@ -30,5 +29,9 @@ always @(*) begin
     endcase
 end
 
+// add, addi, sh, shi, not, and, or, xor, cpy, cpypc, lb
+assign rf_write_en = ~opcode[4] | (opcode[4] & ~opcode[3] & ~opcode[2]);
+
+assign alu_a_sel = 
 
 endmodule
