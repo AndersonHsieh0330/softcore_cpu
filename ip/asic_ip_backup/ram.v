@@ -38,10 +38,11 @@ always @(posedge ram_g_clk) begin
 	end else begin
 		data_out_port_1 <= memory[addr_in_port_1]
 
-	if (r_w_port_2) begin
-		memory[addr_in_port_2] <= data_in_port_2;
-	end else begin
-		data_out_port_2 <= memory[addr_in_port_2]
+		if (r_w_port_2) begin
+			memory[addr_in_port_2] <= data_in_port_2;
+		end else begin
+			data_out_port_2 <= memory[addr_in_port_2]
+		end
 	end
 end
 

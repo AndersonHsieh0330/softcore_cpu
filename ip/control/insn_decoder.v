@@ -1,4 +1,8 @@
 `default_nettype none
+/*
+	this module is responsible for generating register address 
+	and corresponding immediate value from the 8 bit instruction
+*/
 module insn_decoder 
 (
 	input  wire [7:0] insn,

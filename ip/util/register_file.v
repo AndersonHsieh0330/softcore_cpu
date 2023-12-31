@@ -14,6 +14,9 @@ reg [7:0] registers [2:0];
 
 assign data_out = register[read_addr_in];
 
+// note there we do not have a dedicated register for value 0
+// cuz 8 registers is already not a lot and we need the extra register
+// plus we won't need to reset the register that often due to the accumulator design
 always @(posedge clk) begin
     if (reset) begin
         for (integer i = 0 ; i < 8 ; i = i + 1) begin

@@ -21,9 +21,8 @@ always @(*) begin
             /* cpy, cpypc, lb, sb, jmpadr */
             alu_mode = `ALU_MODE_BYPASS_A;
         end
-        4'b1100 : alu_mode = `ALU_MODE_ADD;
         default : begin
-            /* blt, bge, beq, bneq */
+            /* jmpi, blt, bge, beq, bneq */
             alu_mode = `ALU_MODE_ADD;
         end
     endcase
@@ -32,6 +31,16 @@ end
 // add, addi, sh, shi, not, and, or, xor, cpy, cpypc, lb
 assign rf_write_en = ~opcode[4] | (opcode[4] & ~opcode[3] & ~opcode[2]);
 
-assign alu_a_sel = 
+// lb
+assign rf_write_sel = opcode[4:1] == 4'b1001; 
+
+// jmpi, blt, bge, beq, bneq, and cpypc
+assign alu_a_sel = (opcode[4] & opcode[3]) | (opcode == 5'b10001); 
+
+// jmpi, blt, bge, beq, bneq, addi and shi
+assign alu_b_sel = (opcode[4] & opcode[3]) | (~opcode[4] & ~opcode[3] & opcode[1]);
+
+// sb
+assign mem_write_en = opcode[4:1] == 4'b1010;
 
 endmodule

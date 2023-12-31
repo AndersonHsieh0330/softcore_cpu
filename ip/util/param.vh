@@ -20,8 +20,8 @@
 `define ISA_INSN_COUNT     18
 
 //--- ALU flags ---//
-`define ALU_FLAG_EQ        0 // reg_acc == reg_a
-`define ALU_FLAG_GT        1 // reg_a > reg_acc
+`define ALU_FLAG_EQ        0    // reg_acc == reg_a
+`define ALU_FLAG_GT        1    // reg_a > reg_acc
 `define ALU_FLAG_COUNT     2
 
 //--- ALU mode ---//
@@ -33,4 +33,8 @@
 `define ALU_MODE_XOR         5       
 `define ALU_MODE_BYPASS_A    6       
 `define ALU_MODE_BYPASS_B    7       
-`define ALU_MODE_COUNT       8       
+`define ALU_MODE_COUNT       8      
+
+//--- utility ---//
+`define LINE_COUNT           10               // change this to match line count of benchmark file
+`define MEM_PATH             "benchmark.txt"  // name of benchmark file
