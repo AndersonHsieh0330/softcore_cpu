@@ -3,7 +3,8 @@ module control (
     input  wire [4:0] opcode,
     output wire [2:0] alu_mode,
     output wire       rf_write_en, // register file write enable
-    output wire       rf_write_sel, // register file write source select
+    output wire       rf_write_data_sel, // register file write source select
+    output wire       rf_write_addr_sel,
     output wire       alu_a_sel,   // LOW for accumulator, HIGH for PC 
     output wire       alu_b_sel,   // LOW for reg x0 ~ x6, HIGH for immediate value
     output wire       mem_write_en
@@ -32,7 +33,9 @@ end
 assign rf_write_en = ~opcode[4] | (opcode[4] & ~opcode[3] & ~opcode[2]);
 
 // lb
-assign rf_write_sel = opcode[4:1] == 4'b1001; 
+assign rf_write_data_sel = opcode[4:1] == 4'b1001; 
+
+assign rf_write_addr_sel = opcode[4] & ~opcode[3] & ~opcode[2];
 
 // jmpi, blt, bge, beq, bneq, and cpypc
 assign alu_a_sel = (opcode[4] & opcode[3]) | (opcode == 5'b10001); 

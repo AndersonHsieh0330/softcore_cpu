@@ -6,8 +6,8 @@ module alu
 )
 (
 	input  [BIT_COUNT-1:0] 		 a, // reg_acc or PC
-	input  [BIT_COUNT-1:0] 		 reg_acc,
 	input  [BIT_COUNT-1:0] 		 b, // reg x0 ~ x6 or immediate value
+	input  [BIT_COUNT-1:0] 		 reg_acc,
 	input  [BIT_COUNT-1:0] 		 reg_b,
 	input  [`ALU_MODE_COUNT-1:0] alu_mode,
 	output [BIT_COUNT-1:0] 		 c,
@@ -53,8 +53,8 @@ assign isa_or_result = a | b;
 //--- xor, branch flags
 wire [BIT_COUNT-1:0] isa_xor_result;
 xor_comparator comparator_inst (
-	.a(reg_acc), // hard code accumulator to input a for ISA optimization
-	.b(reg_b), // hard code reg_b to input b for ISA optimization
+	.a(reg_acc), // hard code accumulator to input a for ISA optimization, reuse the adder for pc + 2
+	.b(reg_b), // hard code reg_b to input b for ISA optimization, reuse the adder for pc + 2
 	.xor_result(isa_xor_result),
 	.equal(flags[`ALU_FLAG_EQ]),
 	.a_larger(~flags[`ALU_FLAG_GT]) // note that a is reg_acc, so inversed
